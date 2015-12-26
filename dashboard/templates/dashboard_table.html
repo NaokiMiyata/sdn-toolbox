@@ -1,6 +1,21 @@
 <div class="table-responsive">
   Search: <input ng-model="query">
 
+  <nav>
+    <ul class="pagination">
+      <li>
+        <a href="#" aria-label="Previous">
+          <span aria-hidden="true">&laquo;</span>
+        </a>
+      </li>
+      <li ng-repeat="(i, item) in table.items"><a href="#">{{ i }}</a></li>
+      <li>
+        <a href="#" aria-label="Next">
+          <span aria-hidden="true">&raquo;</span>
+        </a>
+      </li>
+    </ul>
+  </nav>
   <table class="table table-striped">
     <thead>
       <tr>
@@ -12,7 +27,7 @@
       </tr>
     </thead>
     <tbody>
-      <tr ng-repeat="item in table.items | filter:query">
+      <tr ng-repeat="item in table.items | filter:query | limitTo:5:1">
         <td>{{ item.number | number}}</td>
         <td>{{ item.first }}</td>
         <td>{{ item.second }}</td>
