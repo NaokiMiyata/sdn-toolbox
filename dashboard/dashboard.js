@@ -1,6 +1,13 @@
 (function() {
   var myApp = angular.module('dashboardApp', []);
 
+  myApp.directive('dashboardContent', function() {
+    return {
+      restrict: 'E',
+      templateUrl: 'dashboard_content'
+    };
+  });
+
   myApp.directive('dashboardNavi', function() {
     return {
       restrict: 'E',
