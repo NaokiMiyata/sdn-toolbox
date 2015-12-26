@@ -19,3 +19,4 @@ Start a test web server in your local environment
 $ npm start
 ```
 
+use browser to access http://localhost:8000/
