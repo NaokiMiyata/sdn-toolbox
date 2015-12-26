@@ -1,0 +1,15 @@
+[
+  {
+    "label": "first",
+    "description": "1st desc"
+  }, {
+    "label": "second",
+    "description": "2nd desc"
+  }, {
+    "label": "third",
+    "description": "3rd desc"
+  }, {
+    "label": "fourth",
+    "description": "4th desc"
+  }
+]
