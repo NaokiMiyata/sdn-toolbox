@@ -31,7 +31,7 @@
 
         graphs.graphs = [];
 
-        $http.get('graphs.json').success(function(data) {
+        $http.get('data/graphs.json').success(function(data) {
           graphs.graphs = data;
         });
       }],
@@ -48,7 +48,7 @@
 
         table.items = [];
 
-        $http.get('table.json').success(function(data) {
+        $http.get('data/table.json').success(function(data) {
           table.items = data;
         });
       }],
