@@ -1,4 +1,6 @@
 <div class="table-responsive">
+  Search: <input ng-model="query">
+
   <table class="table table-striped">
     <thead>
       <tr>
@@ -10,7 +12,7 @@
       </tr>
     </thead>
     <tbody>
-      <tr ng-repeat="item in table.items">
+      <tr ng-repeat="item in table.items | filter:query">
         <td>{{ item.number | number}}</td>
         <td>{{ item.first }}</td>
         <td>{{ item.second }}</td>
