@@ -1,0 +1,22 @@
+<div class="table-responsive">
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>Header</th>
+        <th>Header</th>
+        <th>Header</th>
+        <th>Header</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr ng-repeat="item in table.items">
+        <td>{{ item.number | number}}</td>
+        <td>{{ item.first }}</td>
+        <td>{{ item.second }}</td>
+        <td>{{ item.third }}</td>
+        <td>{{ item.fourth }}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
