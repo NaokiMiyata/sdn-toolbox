@@ -11,8 +11,8 @@
       <li ng-repeat="(i, item) in table.items | filter:query | filter:table.pager" ng-class="{active:table.isPage(i)}">
         <a ng-click="table.page=i">{{ i+1 }}</a>
       </li>
-      <li ng-class="{disabled:table.isLastPage()}">
-        <a ng-click="table.isLastPage() || table.nextPage()" aria-label="Next">
+      <li ng-class="{disabled:table.isLastPage((table.items | filter:query))}">
+        <a ng-click="table.isLastPage((table.items | filter:query)) || table.nextPage()" aria-label="Next">
           <span aria-hidden="true">&raquo;</span>
         </a>
       </li>
