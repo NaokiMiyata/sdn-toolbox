@@ -4,7 +4,7 @@
   <nav>
     <ul class="pagination">
       <li ng-class="{disabled:table.isFirstPage()}">
-        <a ng-click="table.prevPage()" aria-label="Previous">
+        <a ng-click="table.isFirstPage() || table.prevPage()" aria-label="Previous">
           <span aria-hidden="true">&laquo;</span>
         </a>
       </li>
@@ -12,7 +12,7 @@
         <a ng-click="table.page=i">{{ i+1 }}</a>
       </li>
       <li ng-class="{disabled:table.isLastPage()}">
-        <a ng-click="table.nextPage()" aria-label="Next">
+        <a ng-click="table.isLastPage() || table.nextPage()" aria-label="Next">
           <span aria-hidden="true">&raquo;</span>
         </a>
       </li>
