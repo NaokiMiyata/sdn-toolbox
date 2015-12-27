@@ -51,6 +51,11 @@
         $http.get('data/table.json').success(function(data) {
           table.items = data;
         });
+
+        table.page = function(value, index, array) {
+          console.log(index);
+          return index % 5 === 0;
+        }
       }],
       controllerAs: 'table'
     };
