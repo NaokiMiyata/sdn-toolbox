@@ -20,3 +20,10 @@ $ npm start
 ```
 
 use browser to access http://localhost:8000/
+
+CommitでIssueをcloseするには
+============================
+
+commitメッセージに 'resolved #1'を記載する。
+
+複数のIssueに対応付けるには、'resolved #1, resolved #2'とする。
