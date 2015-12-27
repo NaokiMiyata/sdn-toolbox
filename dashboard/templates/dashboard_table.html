@@ -1,24 +1,35 @@
-<div class="panel panel-primary">
+<div class="panel panel-primary" ng-init="currentPage = 1; pageSize = 5">
   <div class="panel-heading">Step 1. Select order</div>
   <div class="panel-body">
     Please check the order details<br/>Search: <input ng-model="query">
-    <nav>
-      <ul class="pagination">
-        <li ng-class="{disabled:table.isFirstPage()}">
-          <a ng-click="table.isFirstPage() || table.prevPage()" aria-label="Previous">
-            <span aria-hidden="true">&laquo;</span>
-          </a>
-      </li>
-        <li ng-repeat="(i, item) in table.items | filter:query | filter:table.pager" ng-class="{active:table.isPage(i)}">
-          <a ng-click="table.page=i">{{ i+1 }}</a>
-        </li>
-        <li ng-class="{disabled:table.isLastPage((table.items | filter:query))}">
-          <a ng-click="table.isLastPage((table.items | filter:query)) || table.nextPage()" aria-label="Next">
-            <span aria-hidden="true">&raquo;</span>
-          </a>
-        </li>
-      </ul>
-    </nav>
+
+<div paging
+  class="small"
+  page="currentPage" 
+  page-size="pageSize" 
+  total="(table.items | filter:query).length"
+  pg-href="#GotoPage-{page}"
+  adjacent="{{adjacent}}"
+  dots="{{dots}}"
+  scroll-top="{{scrollTop}}" 
+  hide-if-empty="{{hideIfEmpty}}"
+  ul-class="{{ulClass}}"
+  active-class="{{activeClass}}"
+  disabled-class="{{disabledClass}}"
+  show-prev-next="{{showPrevNext}}"
+  show-first-last="{{showFirstLast}}"
+  text-first="&laquo;"
+  text-last="&raquo;"
+  text-next="&rsaquo;"
+  text-prev="&lsaquo;"
+  text-title-page="Page {page} hover title text"
+  text-title-first="First Page hover title text"
+  text-title-last="Last Page hover title text"
+  text-title-next="Next Page hover title text"
+  text-title-prev="Previous hover Page title text"    
+  paging-action="DoCtrlPagingAct('Paging Clicked', page, pageSize, (table.items | filter:query).length)">
+</paging>   
+
   </div> <!-- panel-body -->
   <table class="table table-hover">
     <thead>
@@ -31,7 +42,7 @@
       </tr>
     </thead>
     <tbody>
-      <tr ng-repeat="item in table.items | filter:query | limitTo:5:table.page*5" ng-class="{active:table.isSelectedItem(item)}" ng-click="table.setSelectedItem(item)">
+      <tr ng-repeat="item in table.items | filter:query | limitTo:pageSize:(currentPage-1)*pageSize" ng-class="{active:table.isSelectedItem(item)}" ng-click="table.setSelectedItem(item)">
         <td>{{ item.number | number}}</td>
         <td>{{ item.first }}</td>
         <td>{{ item.second }}</td>

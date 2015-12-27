@@ -1,5 +1,5 @@
 (function() {
-  var myApp = angular.module('dashboardApp', []);
+  var myApp = angular.module('dashboardApp', ['bw.paging']);
 
   myApp.directive('dashboardContent', function() {
     return {
@@ -49,7 +49,7 @@
     return {
       restrict: 'E',
       templateUrl: 'templates/dashboard_table',
-      controller: ['$http', function($http) {
+      controller: ['$scope', '$http', function($scope, $http) {
         var table = this;
 
         table.items = [];
@@ -57,28 +57,13 @@
         table.items_per_page = 5;
         table.selected_item = null;
 
+        $scope.showPrevNext = true;
+        $scope.showFirstLast = true;
+
         $http.get('data/table.json').success(function(data) {
           table.items = data;
         });
 
-        table.pager = function(value, index, array) {
-          return index % table.items_per_page === 0;
-        };
-        table.isPage = function(page) {
-            return table.page === page;
-        };
-        table.isFirstPage = function() {
-            return table.isPage(0);
-        };
-        table.isLastPage = function(selectedItems) {
-            return table.isPage(parseInt(selectedItems.length / table.items_per_page));
-        };
-        table.prevPage = function() {
-            table.page--;
-        };
-        table.nextPage = function() {
-            table.page++;
-        };
         table.isSelectedItem = function(item) {
             console.log(dashboard);
             return dashboard.selected_item === item;
