@@ -1,4 +1,7 @@
 <div class="table-responsive">
+  <div class="panel panel-primary">
+    <div class="panel-heading">Step 1. Select order</div>
+    <div class="panel-body">Please check the order details
   Search: <input ng-model="query">
 
   <nav>
@@ -18,7 +21,8 @@
       </li>
     </ul>
   </nav>
-  <table class="table table-striped">
+  </div>
+  <table class="table table-hover">
     <thead>
       <tr>
         <th>#</th>
@@ -29,7 +33,7 @@
       </tr>
     </thead>
     <tbody>
-      <tr ng-repeat="item in table.items | filter:query | limitTo:5:table.page*5">
+      <tr ng-repeat="item in table.items | filter:query | limitTo:5:table.page*5" ng-class="{active:table.selected_item === item}" ng-click="table.selected_item=item">
         <td>{{ item.number | number}}</td>
         <td>{{ item.first }}</td>
         <td>{{ item.second }}</td>
@@ -38,4 +42,21 @@
       </tr>
     </tbody>
   </table>
+ </div>
+
+  <div class="panel panel-primary" ng-show="table.selected_item">
+    <div class="panel-heading">Step 2. Order details</div>
+    <div class="panel-body">Please check the order details</div>
+    <table class="table">
+      <tbody>
+        <tr ng-repeat="(key, value) in table.selected_item">
+          <th>{{ key }}</th>
+          <td>{{ value }}</th>
+        <tr>
+      </tbody>
+    </table>
+    <div class="panel-footer">
+      <button type="button" class="btn btn-primary">next</button>
+     </div>
+  </div>
 </div>

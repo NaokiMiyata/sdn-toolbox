@@ -48,17 +48,24 @@
 
         table.items = [];
         table.page = 0;
+        table.items_per_page = 5;
+        table.selected_item = null;
 
         $http.get('data/table.json').success(function(data) {
           table.items = data;
         });
 
         table.pager = function(value, index, array) {
-          console.log(index);
-          return index % 5 === 0;
+          return index % table.items_per_page === 0;
         };
         table.isPage = function(page) {
             return table.page === page;
+        };
+        table.isFirstPage = function() {
+            return table.isPage(0);
+        };
+        table.isLastPage = function(selectedItems) {
+            return table.isPage(parseInt(selectedItems.length / table.items_per_page));
         };
         table.prevPage = function() {
             table.page--;
@@ -66,14 +73,18 @@
         table.nextPage = function() {
             table.page++;
         };
-        table.isFirstPage = function() {
-            return table.isPage(0);
-        };
-        table.isLastPage = function() {
-            return table.isPage(parseInt(table.items.length / 5));
-        };
       }],
       controllerAs: 'table'
+    };
+  });
+
+  myApp.directive('dashboardDetail', function() {
+    return {
+      restrict: 'E',
+      templateUrl: 'templates/dashboard_detail',
+      controller: ['$http', function($http) {
+      }],
+      controllerAs: 'detail'
     };
   });
 })();
