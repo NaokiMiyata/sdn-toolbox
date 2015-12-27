@@ -47,15 +47,31 @@
         var table = this;
 
         table.items = [];
+        table.page = 0;
 
         $http.get('data/table.json').success(function(data) {
           table.items = data;
         });
 
-        table.page = function(value, index, array) {
+        table.pager = function(value, index, array) {
           console.log(index);
           return index % 5 === 0;
-        }
+        };
+        table.isPage = function(page) {
+            return table.page === page;
+        };
+        table.prevPage = function() {
+            table.page--;
+        };
+        table.nextPage = function() {
+            table.page++;
+        };
+        table.isFirstPage = function() {
+            return table.isPage(0);
+        };
+        table.isLastPage = function() {
+            return table.isPage(parseInt(table.items.length / 5));
+        };
       }],
       controllerAs: 'table'
     };
