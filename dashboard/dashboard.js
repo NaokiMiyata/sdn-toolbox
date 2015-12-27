@@ -39,7 +39,13 @@
     };
   });
 
-  myApp.directive('dashboardTable', function() {
+  myApp.factory('dashboard', function() {
+    return {
+      selected_item: null
+    }
+  });
+
+  myApp.directive('dashboardTable', ['dashboard', function(dashboard) {
     return {
       restrict: 'E',
       templateUrl: 'templates/dashboard_table',
@@ -73,18 +79,30 @@
         table.nextPage = function() {
             table.page++;
         };
+        table.isSelectedItem = function(item) {
+            console.log(dashboard);
+            return dashboard.selected_item === item;
+        };
+        table.setSelectedItem = function(item) {
+            dashboard.selected_item = item;
+        };
       }],
       controllerAs: 'table'
     };
-  });
+  }]);
 
-  myApp.directive('dashboardDetail', function() {
+  myApp.directive('dashboardDetails', ['dashboard', function(dashboard) {
     return {
       restrict: 'E',
-      templateUrl: 'templates/dashboard_detail',
+      templateUrl: 'templates/dashboard_details',
       controller: ['$http', function($http) {
+        var details = this;
+
+        details.getSelectedItem = function() {
+            return dashboard.selected_item;
+        };
       }],
-      controllerAs: 'detail'
+      controllerAs: 'detailsCtrl'
     };
-  });
+  }]);
 })();

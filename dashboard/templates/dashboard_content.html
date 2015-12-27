@@ -1,3 +1,65 @@
 <h1 class="page-header">Dashboard</h1>
 
 <dashboard-table></dashboard-table>
+
+<dashboard-details></dashboard-details>
+
+<div class="panel panel-primary" ng-show="table.precheck_result">
+  <div class="panel-heading">Step 3. Precheck result</div>
+  <div class="panel-body">Please see the precheck result and push 'Confiture' button.</div>
+  <table class="table">
+    <tbody>
+      <tr class="success">
+        <th>Existing configuration</th>
+        <td>None</td>
+      </tr>
+      <tr class="success">
+        <th>Active alarms</th>
+        <td>None</td>
+      </tr>
+      <tr class="success">
+        <th>Performance Monitor</th>
+        <td>OK</td>
+      </tr>
+    </tbody>
+  </table>
+  <div class="panel-footer">
+    <button type="button" class="btn btn-primary" ng-click="table.configuration_result=1">Configure</button>
+  </div>
+</div>
+
+
+<div class="panel panel-primary" ng-show="table.configuration_result">
+    <div class="panel-heading">Step 4. Configuration result</div>
+    <div class="panel-body">Please see the configuration result and push 'Postcheck' button.</div>
+    <table class="table">
+      <tbody>
+        <tr class="success">
+          <th>Configuration</th>
+          <td>Success</td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="panel-footer">
+      <button type="button" class="btn btn-primary" ng-click="table.postcheck_result=1">Postcheck</button>
+    </div>
+  </div>
+
+  <div class="panel panel-primary" ng-show="table.postcheck_result">
+    <div class="panel-heading">Step 5. Postcheck result</div>
+    <div class="panel-body">Please see the postcheck result./div>
+    <table class="table">
+     <tbody>
+      <tr class="success">
+        <th>Active alarms</th>
+        <td>None</td>
+      </tr>
+      <tr class="success">
+        <th>Performance Test</th>
+        <td>OK</td>
+      </tr>
+    </tbody>
+   </table>
+   <div class="panel-footer">
+   </div>
+  </div>

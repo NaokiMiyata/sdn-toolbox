@@ -1,27 +1,25 @@
-<div class="table-responsive">
-  <div class="panel panel-primary">
-    <div class="panel-heading">Step 1. Select order</div>
-    <div class="panel-body">Please check the order details
-  Search: <input ng-model="query">
-
-  <nav>
-    <ul class="pagination">
-      <li ng-class="{disabled:table.isFirstPage()}">
-        <a ng-click="table.isFirstPage() || table.prevPage()" aria-label="Previous">
-          <span aria-hidden="true">&laquo;</span>
-        </a>
+<div class="panel panel-primary">
+  <div class="panel-heading">Step 1. Select order</div>
+  <div class="panel-body">
+    Please check the order details<br/>Search: <input ng-model="query">
+    <nav>
+      <ul class="pagination">
+        <li ng-class="{disabled:table.isFirstPage()}">
+          <a ng-click="table.isFirstPage() || table.prevPage()" aria-label="Previous">
+            <span aria-hidden="true">&laquo;</span>
+          </a>
       </li>
-      <li ng-repeat="(i, item) in table.items | filter:query | filter:table.pager" ng-class="{active:table.isPage(i)}">
-        <a ng-click="table.page=i">{{ i+1 }}</a>
-      </li>
-      <li ng-class="{disabled:table.isLastPage((table.items | filter:query))}">
-        <a ng-click="table.isLastPage((table.items | filter:query)) || table.nextPage()" aria-label="Next">
-          <span aria-hidden="true">&raquo;</span>
-        </a>
-      </li>
-    </ul>
-  </nav>
-  </div>
+        <li ng-repeat="(i, item) in table.items | filter:query | filter:table.pager" ng-class="{active:table.isPage(i)}">
+          <a ng-click="table.page=i">{{ i+1 }}</a>
+        </li>
+        <li ng-class="{disabled:table.isLastPage((table.items | filter:query))}">
+          <a ng-click="table.isLastPage((table.items | filter:query)) || table.nextPage()" aria-label="Next">
+            <span aria-hidden="true">&raquo;</span>
+          </a>
+        </li>
+      </ul>
+    </nav>
+  </div> <!-- panel-body -->
   <table class="table table-hover">
     <thead>
       <tr>
@@ -33,7 +31,7 @@
       </tr>
     </thead>
     <tbody>
-      <tr ng-repeat="item in table.items | filter:query | limitTo:5:table.page*5" ng-class="{active:table.selected_item === item}" ng-click="table.selected_item=item">
+      <tr ng-repeat="item in table.items | filter:query | limitTo:5:table.page*5" ng-class="{active:table.isSelectedItem(item)}" ng-click="table.setSelectedItem(item)">
         <td>{{ item.number | number}}</td>
         <td>{{ item.first }}</td>
         <td>{{ item.second }}</td>
@@ -42,81 +40,5 @@
       </tr>
     </tbody>
   </table>
- </div>
+</div><!-- panel -->
 
-  <div class="panel panel-primary" ng-show="table.selected_item">
-    <div class="panel-heading">Step 2. Order details</div>
-    <div class="panel-body">Please check the order details</div>
-    <table class="table">
-      <tbody>
-        <tr ng-repeat="(key, value) in table.selected_item">
-          <th>{{ key }}</th>
-          <td>{{ value }}</th>
-        <tr>
-      </tbody>
-    </table>
-    <div class="panel-footer">
-      <button type="button" class="btn btn-primary" ng-click="table.precheck_result=1">Precheck</button>
-    </div>
-  </div>
-
-  <div class="panel panel-primary" ng-show="table.precheck_result">
-    <div class="panel-heading">Step 3. Precheck result</div>
-    <div class="panel-body">Please see the precheck result and push 'Confiture' button.</div>
-    <table class="table">
-     <tbody>
-      <tr class="success">
-        <th>Existing configuration</th>
-        <td>None</td>
-      </tr>
-      <tr class="success">
-        <th>Active alarms</th>
-        <td>None</td>
-      </tr>
-      <tr class="success">
-        <th>Performance Monitor</th>
-        <td>OK</td>
-      </tr>
-    </tbody>
-   </table>
-   <div class="panel-footer">
-     <button type="button" class="btn btn-primary" ng-click="table.configuration_result=1">Configure</button>
-   </div>
-  </div>
- 
-
-  <div class="panel panel-primary" ng-show="table.configuration_result">
-    <div class="panel-heading">Step 4. Configuration result</div>
-    <div class="panel-body">Please see the configuration result and push 'Postcheck' button.</div>
-    <table class="table">
-      <tbody>
-        <tr class="success">
-          <th>Configuration</th>
-          <td>Success</td>
-        </tr>
-      </tbody>
-    </table>
-    <div class="panel-footer">
-      <button type="button" class="btn btn-primary" ng-click="table.postcheck_result=1">Postcheck</button>
-    </div>
-  </div>
-
-  <div class="panel panel-primary" ng-show="table.postcheck_result">
-    <div class="panel-heading">Step 5. Postcheck result</div>
-    <div class="panel-body">Please see the postcheck result./div>
-    <table class="table">
-     <tbody>
-      <tr class="success">
-        <th>Active alarms</th>
-        <td>None</td>
-      </tr>
-      <tr class="success">
-        <th>Performance Test</th>
-        <td>OK</td>
-      </tr>
-    </tbody>
-   </table>
-   <div class="panel-footer">
-   </div>
-  </div>
-</div>
