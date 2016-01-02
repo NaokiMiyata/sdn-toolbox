@@ -1,10 +1,19 @@
 (function() {
-  var myApp = angular.module('dashboardApp', ['bw.paging']);
+  var myApp = angular.module('dashboardApp', ['ngAnimate', 'bw.paging']);
+
+  myApp.factory('navigation', function(){
+    return {
+      selected_navigation: 'one_by_one'
+    }
+  });
 
   myApp.directive('dashboardContent', function() {
     return {
       restrict: 'E',
-      templateUrl: 'templates/dashboard_content'
+      templateUrl: 'templates/dashboard_content',
+      controller: function() {
+      },
+      controllerAs: 'contentCtrl'
     };
   });
 
@@ -41,7 +50,7 @@
 
   myApp.factory('dashboard', function() {
     return {
-      selected_item: null
+      selected_item: null,
     }
   });
 
@@ -65,11 +74,15 @@
         });
 
         table.isSelectedItem = function(item) {
-            console.log(dashboard);
             return dashboard.selected_item === item;
         };
+
         table.setSelectedItem = function(item) {
-            dashboard.selected_item = item;
+            if (dashboard.selected_item === item) {
+                dashboard.selected_item = null;
+            } else {
+                dashboard.selected_item = item;
+            }
         };
       }],
       controllerAs: 'table'
@@ -79,10 +92,11 @@
   myApp.directive('dashboardDetails', ['dashboard', function(dashboard) {
     return {
       restrict: 'E',
-      templateUrl: 'templates/dashboard_details',
+      templateUrl: 'templates/dashboard_details.html',
       controller: ['$http', function($http) {
         var details = this;
 
+        details.dashboard = dashboard;
         details.getSelectedItem = function() {
             return dashboard.selected_item;
         };
@@ -90,4 +104,15 @@
       controllerAs: 'detailsCtrl'
     };
   }]);
+
+  myApp.directive('dashboardPrecheck', ['dashboard', function(dashboard) {
+    return {
+      restrict: 'E',
+      templateUrl: 'templates/dashboard_precheck',
+      controller: function() {
+      },
+      controllerAs: 'precheckCtrl'
+    };
+  }]);
+
 })();
