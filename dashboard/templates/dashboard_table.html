@@ -3,20 +3,19 @@
   <div class="panel-body">
     Please check the order details<br/>Search: <input ng-model="query">
 
-<div paging
-  class="small"
-  page="currentPage" 
-  page-size="pageSize" 
-  total="(table.items | filter:query).length"
-  pg-href="#GotoPage-{page}"
-  show-prev-next="{{showPrevNext}}"
-  show-first-last="{{showFirstLast}}"
-  text-first="&laquo;"
-  text-last="&raquo;"
-  text-next="&rsaquo;"
-  text-prev="&lsaquo;"
-  paging-action="DoCtrlPagingAct('Paging Clicked', page, pageSize, (table.items | filter:query).length)">
-</paging>   
+  <div paging
+    class="small"
+    page="currentPage" 
+    page-size="pageSize" 
+    total="(items | filter:query).length"
+    pg-href="#GotoPage-{page}"
+    show-prev-next="{{showPrevNext}}"
+    show-first-last="{{showFirstLast}}"
+    text-first="&laquo;"
+    text-last="&raquo;"
+    text-next="&rsaquo;"
+    text-prev="&lsaquo;"
+  </paging>   
 
   </div> <!-- panel-body -->
   <table class="table table-hover">
@@ -31,9 +30,9 @@
     </thead>
     <tbody>
       <tr
-         ng-repeat="item in table.items | filter:query | limitTo:pageSize:(currentPage-1)*pageSize"
-         ng-class="{active:table.isSelectedItem(item)}"
-         ng-click="table.setSelectedItem(item)">
+         ng-repeat="item in items | filter:query | limitTo:pageSize:(currentPage-1)*pageSize"
+         ng-class="{active:$parent.isSelectedItem(item)}"
+         ng-click="$parent.setItem(item)">
         <td>{{ item.number | number}}</td>
         <td>{{ item.first }}</td>
         <td>{{ item.second }}</td>
