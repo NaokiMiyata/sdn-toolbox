@@ -9,24 +9,12 @@
   page-size="pageSize" 
   total="(table.items | filter:query).length"
   pg-href="#GotoPage-{page}"
-  adjacent="{{adjacent}}"
-  dots="{{dots}}"
-  scroll-top="{{scrollTop}}" 
-  hide-if-empty="{{hideIfEmpty}}"
-  ul-class="{{ulClass}}"
-  active-class="{{activeClass}}"
-  disabled-class="{{disabledClass}}"
   show-prev-next="{{showPrevNext}}"
   show-first-last="{{showFirstLast}}"
   text-first="&laquo;"
   text-last="&raquo;"
   text-next="&rsaquo;"
   text-prev="&lsaquo;"
-  text-title-page="Page {page} hover title text"
-  text-title-first="First Page hover title text"
-  text-title-last="Last Page hover title text"
-  text-title-next="Next Page hover title text"
-  text-title-prev="Previous hover Page title text"    
   paging-action="DoCtrlPagingAct('Paging Clicked', page, pageSize, (table.items | filter:query).length)">
 </paging>   
 
@@ -42,7 +30,10 @@
       </tr>
     </thead>
     <tbody>
-      <tr ng-repeat="item in table.items | filter:query | limitTo:pageSize:(currentPage-1)*pageSize" ng-class="{active:table.isSelectedItem(item)}" ng-click="table.setSelectedItem(item)">
+      <tr
+         ng-repeat="item in table.items | filter:query | limitTo:pageSize:(currentPage-1)*pageSize"
+         ng-class="{active:table.isSelectedItem(item)}"
+         ng-click="table.setSelectedItem(item)">
         <td>{{ item.number | number}}</td>
         <td>{{ item.first }}</td>
         <td>{{ item.second }}</td>
