@@ -115,4 +115,17 @@
     };
   }]);
 
+  myApp.directive('dashboardConfiguration', function() {
+    return {
+      restrict: 'E',
+      templateUrl: 'templates/dashboard_configuration.html',
+    }
+  });
+
+  myApp.directive('dashboardPostcheck', function() {
+    return {
+      restrict: 'E',
+      templateUrl: 'templates/dashboard_postcheck.html',
+    }
+  });
 })();
