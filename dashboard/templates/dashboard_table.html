@@ -1,21 +1,32 @@
 <div class="panel panel-primary" ng-init="currentPage = 1; pageSize = 5">
   <div class="panel-heading">Step 1. Select order</div>
   <div class="panel-body">
-    Please check the order details<br/>Search: <input ng-model="query">
+    Please check the order<br/>Search: <input ng-model="query">
 
-  <div paging
-    class="small"
-    page="currentPage" 
-    page-size="pageSize" 
-    total="(items | filter:query).length"
-    pg-href="#GotoPage-{page}"
-    show-prev-next="{{showPrevNext}}"
-    show-first-last="{{showFirstLast}}"
-    text-first="&laquo;"
-    text-last="&raquo;"
-    text-next="&rsaquo;"
-    text-prev="&lsaquo;"
-  </paging>   
+    <div class="btn-group" role="group">
+      <button
+        type="button"
+        class="btn btn-default"
+        ng-repeat="pageSize in [5, 25, 50]"
+        ng-click="$parent.pageSize = pageSize">
+        {{ pageSize }}件
+      </button>
+    </div>
+
+    <div
+      paging
+      class="small"
+      page="currentPage" 
+      page-size="pageSize" 
+      total="(items | filter:query).length"
+      pg-href="#GotoPage-{page}"
+      show-prev-next="{{showPrevNext}}"
+      show-first-last="{{showFirstLast}}"
+      text-first="&laquo;"
+      text-last="&raquo;"
+      text-next="&rsaquo;"
+      text-prev="&lsaquo;"
+    </div>
 
   </div> <!-- panel-body -->
   <table class="table table-hover">

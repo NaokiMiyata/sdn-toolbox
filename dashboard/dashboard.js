@@ -34,11 +34,8 @@
           selectedItem: '='
       },
       controller: ['$scope', '$http', function($scope, $http) {
-        var table = this;
-
-        table.page = 0;
-        table.items_per_page = 5;
-
+        $scope.currentPage = 1;
+        $scope.pageSize = 5;
         $scope.items = [];
         $scope.showPrevNext = true;
         $scope.showFirstLast = true;
