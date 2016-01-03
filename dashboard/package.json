@@ -1,0 +1,26 @@
+{
+  "name": "dashboard",
+  "version": "0.0.0",
+  "description": "dashboard samples",
+  "main": "index.js",
+  "scripts": {
+    "start": "http-server -a 0.0.0.0 -p 8000 -c-1",
+    "test": "make test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/NaokiMiyata/sdn-toolbox.git"
+  },
+  "keywords": [
+    "sdn",
+    "dashboard"
+  ],
+  "author": "Naoki Miyata",
+  "license": "BSD-2-Clause",
+  "bugs": {
+    "url": "https://github.com/NaokiMiyata/sdn-toolbox/issues"
+  },
+  "devDependencies": {
+    "http-server": "~0.8.5"
+  }
+}
