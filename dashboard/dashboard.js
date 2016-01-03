@@ -78,7 +78,7 @@
       restrict: 'A',
       templateUrl: 'templates/dashboard_precheck',
       scope: {
-          orderConfirmed: '=',
+          showFlag: '=',
           precheckConfirmed: '=',
       },
       controller: function() {
@@ -92,6 +92,7 @@
       restrict: 'A',
       templateUrl: 'templates/dashboard_configuration.html',
       scope: {
+          showFlag: '=',
           precheckConfirmed: '=',
           configurationConfirmed: '=',
       }
@@ -103,6 +104,7 @@
       restrict: 'A',
       templateUrl: 'templates/dashboard_postcheck.html',
       scope: {
+          showFlag: '=',
           configurationConfirmed: '=',
       }
     }
