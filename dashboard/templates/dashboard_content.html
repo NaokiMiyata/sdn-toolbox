@@ -1,42 +1,29 @@
 <h1 class="page-header">Dashboard</h1>
 
-<dashboard-table></dashboard-table>
+<div ng-init="item = null; orderConfirmed = false">
+  <dashboard-table selected-item="item"></dashboard-table>
 
-<dashboard-details></dashboard-details>
-
-<dashboard-precheck></dashboard-precheck>
-
-<div class="panel panel-primary dashboard-panel" ng-show="table.configuration_result">
-  <div class="panel-heading">Step 4. Configuration result</div>
-  <div class="panel-body">Please see the configuration result and push 'Postcheck' button.</div>
-  <table class="table">
-    <tbody>
-      <tr class="success">
-        <th>Configuration</th>
-        <td>Success</td>
-      </tr>
-    </tbody>
-  </table>
-  <div class="panel-footer">
-    <button type="button" class="btn btn-primary" ng-click="table.postcheck_result=1">Postcheck</button>
+  <div dashboard-details
+    class="dashboard-panel"
+    ng-show="item"
+    item="item"
+    order-confirmed="orderConfirmed">
   </div>
-</div>
 
-<div class="panel panel-primary dashboard-panel" ng-show="table.postcheck_result">
-  <div class="panel-heading">Step 5. Postcheck result</div>
-  <div class="panel-body">Please see the postcheck result./div>
-  <table class="table">
-   <tbody>
-    <tr class="success">
-      <th>Active alarms</th>
-      <td>None</td>
-    </tr>
-    <tr class="success">
-      <th>Performance Test</th>
-      <td>OK</td>
-    </tr>
-  </tbody>
- </table>
- <div class="panel-footer">
- </div>
+  <div dashboard-precheck
+    class="dashboard-panel"
+    ng-show="orderConfirmed"
+    precheck-confirmed="precheckConfirmed">
+  </div>
+
+  <div dashboard-configuration
+    class="dashboard-panel"
+    ng-show="precheckConfirmed"
+    configuration-confirmed="configurationConfirmed">
+  </div>
+
+  <div dashboard-postcheck
+    class="dashboard-panel"
+    ng-show="configurationConfirmed">
+  </div>
 </div>

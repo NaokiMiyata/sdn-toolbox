@@ -1,16 +1,11 @@
 (function() {
   var myApp = angular.module('dashboardApp', ['ngAnimate', 'bw.paging']);
 
-  myApp.factory('navigation', function(){
-    return {
-      selected_navigation: 'one_by_one'
-    }
-  });
-
   myApp.directive('dashboardContent', function() {
     return {
       restrict: 'E',
       templateUrl: 'templates/dashboard_content',
+      scope: {},
       controller: function() {
       },
       controllerAs: 'contentCtrl'
@@ -31,88 +26,88 @@
     };
   });
 
-  myApp.directive('dashboardGraphs', function() {
-    return {
-      restrict: 'E',
-      templateUrl: 'templates/dashboard_graphs',
-      controller: ['$http', function($http) {
-        var graphs = this;
-
-        graphs.graphs = [];
-
-        $http.get('data/graphs.json').success(function(data) {
-          graphs.graphs = data;
-        });
-      }],
-      controllerAs: 'graphs'
-    };
-  });
-
-  myApp.factory('dashboard', function() {
-    return {
-      selected_item: null,
-    }
-  });
-
-  myApp.directive('dashboardTable', ['dashboard', function(dashboard) {
+  myApp.directive('dashboardTable', function() {
     return {
       restrict: 'E',
       templateUrl: 'templates/dashboard_table',
+      scope: {
+          selectedItem: '='
+      },
       controller: ['$scope', '$http', function($scope, $http) {
         var table = this;
 
-        table.items = [];
         table.page = 0;
         table.items_per_page = 5;
-        table.selected_item = null;
 
+        $scope.items = [];
         $scope.showPrevNext = true;
         $scope.showFirstLast = true;
 
         $http.get('data/table.json').success(function(data) {
-          table.items = data;
+          $scope.items = data;
         });
 
-        table.isSelectedItem = function(item) {
-            return dashboard.selected_item === item;
+        $scope.isSelectedItem = function(item) {
+            return $scope.selectedItem === item;
         };
-
-        table.setSelectedItem = function(item) {
-            if (dashboard.selected_item === item) {
-                dashboard.selected_item = null;
+        $scope.setItem = function(item) {
+            if ($scope.selectedItem === item) {
+                $scope.selectedItem = null;
             } else {
-                dashboard.selected_item = item;
+                $scope.selectedItem = item;
             }
         };
       }],
-      controllerAs: 'table'
+      controllerAs: 'tableCtrl'
     };
-  }]);
+  });
 
-  myApp.directive('dashboardDetails', ['dashboard', function(dashboard) {
+  myApp.directive('dashboardDetails', function() {
     return {
-      restrict: 'E',
+      restrict: 'A',
       templateUrl: 'templates/dashboard_details.html',
+      scope: {
+          item: '=',
+          orderConfirmed: '='
+      },
       controller: ['$http', function($http) {
-        var details = this;
-
-        details.dashboard = dashboard;
-        details.getSelectedItem = function() {
-            return dashboard.selected_item;
-        };
       }],
       controllerAs: 'detailsCtrl'
     };
-  }]);
+  });
 
-  myApp.directive('dashboardPrecheck', ['dashboard', function(dashboard) {
+  myApp.directive('dashboardPrecheck', function() {
     return {
-      restrict: 'E',
+      restrict: 'A',
       templateUrl: 'templates/dashboard_precheck',
+      scope: {
+          orderConfirmed: '=',
+          precheckConfirmed: '=',
+      },
       controller: function() {
       },
       controllerAs: 'precheckCtrl'
     };
-  }]);
+  });
 
+  myApp.directive('dashboardConfiguration', function() {
+    return {
+      restrict: 'A',
+      templateUrl: 'templates/dashboard_configuration.html',
+      scope: {
+          precheckConfirmed: '=',
+          configurationConfirmed: '=',
+      }
+    }
+  });
+
+  myApp.directive('dashboardPostcheck', function() {
+    return {
+      restrict: 'A',
+      templateUrl: 'templates/dashboard_postcheck.html',
+      scope: {
+          configurationConfirmed: '=',
+      }
+    }
+  });
 })();
