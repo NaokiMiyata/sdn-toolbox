@@ -13,17 +13,20 @@
   <div dashboard-precheck
     class="dashboard-panel"
     ng-show="orderConfirmed"
+    show-flag="orderConfirmed"
     precheck-confirmed="precheckConfirmed">
   </div>
 
   <div dashboard-configuration
     class="dashboard-panel"
     ng-show="precheckConfirmed"
+    show-flag="precheckConfirmed"
     configuration-confirmed="configurationConfirmed">
   </div>
 
   <div dashboard-postcheck
     class="dashboard-panel"
-    ng-show="configurationConfirmed">
+    ng-show="configurationConfirmed"
+    show-flag="configurationConfirmed">
   </div>
 </div>
