@@ -4,6 +4,7 @@
   myApp.directive('dashboardContent', function() {
     return {
       restrict: 'E',
+
       templateUrl: 'templates/dashboard_content',
       scope: {},
       controller: function() {
@@ -142,31 +143,36 @@
               .style("text-anchor", "middle")
 	      .text("front(out)");
 
+	  var position = {
+	  };
+
           var line = svg.selectAll(".cx")
-              .data(d3.range(0, 126 * 8))
+              .data(d3.range(0, 12 * 90))
               .enter().append("path")
               .attr("class", "cx")
-              .attr("d", function(d) { return "M" + ((7-d%8) + 0.5)*cellSize + "," + (1+parseInt(d/8)+0.5)*cellSize + "L" + ((7-d%8)+16+.5)*cellSize + "," + (1+parseInt(d/8)+.5)*cellSize;
+              .attr("d", function(d) { 
+                  return "M" + ((11-d%12) + 0.5)*cellSize + "," + (1+parseInt(d/12)+0.5)*cellSize + 
+		     "L" + ((11-d%12)+16+.5)*cellSize + "," + (1+parseInt(d/12)+.5)*cellSize;
               });
 
           var front_rect = svg.selectAll(".front_port")
-	      .data(d3.range(0, 126 * 8))
+	      .data(d3.range(0, 12 * 90))
               .enter().append("rect")
               .attr("class", "port front_port")
               .attr("width", cellSize)
               .attr("height", cellSize)
-              .attr("x", function(d) { return (d % 8) * cellSize; })
-              .attr("y", function(d) { return (1 + parseInt(d / 8)) * cellSize; })
+              .attr("x", function(d) { return (d % 12) * cellSize; })
+              .attr("y", function(d) { return (1 + parseInt(d / 12)) * cellSize; })
               .on("click", function(d) {  
                   console.log(d); 
-                  console.log('fiber number is ' + ((126-(1+parseInt(d/8)))*8+d%8));
-                  console.log('x is ' + d%8);
-                  console.log('y is ' + (126-(1+parseInt(d/8))));
+                  console.log('fiber number is ' + ((90-(1+parseInt(d/12)))*12+d%12));
+                  console.log('x is ' + d%12);
+                  console.log('y is ' + (90-(1+parseInt(d/12))));
               })
               .on("mouseover", function(d){
                 return tooltip.style("visibility", "visible")
-                  .text('fiber number is ' + ((126-(1+parseInt(d/8)))*8+d%8) +
-                        '(' + (d%8)+ ',' + (126-(1 + parseInt(d/8))) + ')');
+                  .text('fiber number is ' + ((90-(1+parseInt(d/12)))*12+d%12) +
+                        '(' + (d%12)+ ',' + (90-(1 + parseInt(d/12))) + ')');
               })
               .on("mousemove", function(d){
                 return tooltip.style("top", (event.pageY-40)+"px")
@@ -184,22 +190,22 @@
 	      .text("rear(in)");
 
           var rear_rect = svg.selectAll(".rear_port")
-	      .data(d3.range(0, 126 * 8))
+	      .data(d3.range(0, 90 * 12))
               .enter().append("rect")
               .attr("class", "port rear_port")
               .attr("width", cellSize)
               .attr("height", cellSize)
-              .attr("x", function(d) { return (d % 8 + 16) * cellSize; })
-              .attr("y", function(d) { return (1 +  parseInt(d / 8)) * cellSize; })
+              .attr("x", function(d) { return (d % 12 + 16) * cellSize; })
+              .attr("y", function(d) { return (1 +  parseInt(d / 12)) * cellSize; })
               .on("click", function(d) {
                   console.log(d); 
-                  console.log('x is ' + d%8);
-                  console.log('y is ' + (126-(1+parseInt(d/8))));
+                  console.log('x is ' + d%12);
+                  console.log('y is ' + (90-(1+parseInt(d/12))));
               })
               .on("mouseover", function(d){
                 return tooltip.style("visibility", "visible")
-                  .text('fiber number is ' + ((126-(1+parseInt(d/8)))*8+d%8) +
-                        '(' + (d%8)+ ',' + (126-(1 + parseInt(d/8))) + ')');
+                  .text('fiber number is ' + ((90-(1+parseInt(d/12)))*12+d%12) +
+                        '(' + (d%12)+ ',' + (90-(1 + parseInt(d/12))) + ')');
               })
               .on("mousemove", function(d){
                 return tooltip.style("top", (event.pageY-40)+"px")
@@ -211,41 +217,49 @@
 
           $scope.numericalPosition = function() {
             svg.selectAll(".rear_port")
-              .data(d3.range(0, 126 * 8))
+              .data(d3.range(0, 90 * 12))
               .transition().duration(1000)
               .attr("x", function(d) { return 20 * cellSize; })
-              .attr("y", function(d) { return (126*8-((126-(1+parseInt(d/8)))*8+d%8)) * cellSize; });
+              .attr("y", function(d) {
+		      return (90*12-((90-(1+parseInt(d/12)))*12+d%12)) * cellSize;
+	      });
 
             svg.selectAll(".front_port")
-              .data(d3.range(0, 126 * 8))
+              .data(d3.range(0, 90 * 12))
               .transition().duration(1000)
               .attr("x", function(d) { return 4 * cellSize; })
-              .attr("y", function(d) { return (126*8-((126-(1+parseInt(d/8)))*8+d%8)) * cellSize; });
+              .attr("y", function(d) {
+		      return (90*12-((90-(1+parseInt(d/12)))*12+d%12)) * cellSize;
+	      });
 
             svg.selectAll(".cx")
-              .data(d3.range(0, 126 * 8))
+              .data(d3.range(0, 90 * 12))
               .transition().duration(1000)
-              .attr("d", function(d) { return "M" + (4.5*cellSize) + "," + (1+d+0.5)*cellSize + "L" + (20.5)*cellSize + "," + (1+d+.5)*cellSize;});
+              .attr("d", function(d) { 
+                  return "M" + (4.5*cellSize) + "," + (1+d+0.5)*cellSize +
+		     "L" + (20.5)*cellSize + "," + (1+d+.5)*cellSize;});
           };
 
           $scope.physicalPosition = function() {
             svg.selectAll(".cx")
-              .data(d3.range(0, 126 * 8))
+              .data(d3.range(0, 90 * 12))
               .transition().duration(1000)
-              .attr("d", function(d) { return "M" + ((7-d%8) + 0.5)*cellSize + "," + (1+parseInt(d/8)+0.5)*cellSize + "L" + ((7-d%8)+16+.5)*cellSize + "," + (1+parseInt(d/8)+.5)*cellSize;
+              .attr("d", function(d) {
+                  return "M" + ((11-d%12) + 0.5)*cellSize + "," + (1+parseInt(d/12)+0.5)*cellSize +
+		     "L" + ((11-d%12)+16+.5)*cellSize + "," + (1+parseInt(d/12)+.5)*cellSize;
               });
 
             svg.selectAll(".front_port")
-              .data(d3.range(0, 126 * 8))
+              .data(d3.range(0, 12 * 90))
               .transition().duration(1000)
-              .attr("x", function(d) { return (d % 8) * cellSize; })
-              .attr("y", function(d) { return (1 + parseInt(d / 8)) * cellSize; });
+              .attr("x", function(d) { return (d % 12) * cellSize; })
+              .attr("y", function(d) { return (1 + parseInt(d / 12)) * cellSize; });
 
             svg.selectAll(".rear_port")
-	      .data(d3.range(0, 126 * 8))
+	      .data(d3.range(0, 12 * 90))
               .transition().duration(1000)
-              .attr("x", function(d) { return (d % 8 + 16) * cellSize; })
-              .attr("y", function(d) { return (1 + parseInt(d / 8)) * cellSize; });
+              .attr("x", function(d) { return (d % 12 + 16) * cellSize; })
+              .attr("y", function(d) { return (1 + parseInt(d / 12)) * cellSize; });
           };
 
         },
