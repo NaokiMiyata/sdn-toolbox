@@ -1,6 +1,23 @@
 (function() {
   var myApp = angular.module('dashboardApp', ['ngAnimate', 'bw.paging']);
 
+//custom filter to use regular expression
+  myApp.filter('regex', function() {
+    return function(input, regex) {
+        var patt = new RegExp(regex);
+        var out = [];
+        for (var i = 0; i < input.length; i++){
+          for ( p in input[i]) {
+            if(patt.test(input[i][p])){
+                out.push(input[i]);
+                break;
+            }
+          }
+        }
+      return out;
+    };
+  });
+
   myApp.directive('dashboardContent', function() {
     return {
       restrict: 'E',
@@ -125,22 +142,22 @@
           var percent = d3.format(".1%");
 
           var color = d3.scale.quantize()
-	      .domain([-.05, .05])
-	      .range(d3.range(11).map(function(d) { return "q" + d + "-11"; }));
+        .domain([-.05, .05])
+        .range(d3.range(11).map(function(d) { return "q" + d + "-11"; }));
 
           var svg = d3.select("#svg").selectAll("svg")
-	      .data(d3.range(2010, 2011))
-	      .enter().append("svg")
-	      .attr("width", width)
-	      .attr("height", height)
-	      .attr("class", "RdYlGn")
-	      .append("g")
+        .data(d3.range(2010, 2011))
+        .enter().append("svg")
+        .attr("width", width)
+        .attr("height", height)
+        .attr("class", "RdYlGn")
+        .append("g")
               .attr("transform", "translate(" + cellSize + "," + cellSize + ")");
 
           svg.append("text")
               .attr("transform", "translate(" + cellSize * 4 + ", 0)")
               .style("text-anchor", "middle")
-	      .text("front(out)");
+        .text("front(out)");
 
           var line = svg.selectAll(".cx")
               .data(d3.range(0, 126 * 8))
@@ -150,15 +167,15 @@
               });
 
           var front_rect = svg.selectAll(".front_port")
-	      .data(d3.range(0, 126 * 8))
+        .data(d3.range(0, 126 * 8))
               .enter().append("rect")
               .attr("class", "port front_port")
               .attr("width", cellSize)
               .attr("height", cellSize)
               .attr("x", function(d) { return (d % 8) * cellSize; })
               .attr("y", function(d) { return (1 + parseInt(d / 8)) * cellSize; })
-              .on("click", function(d) {  
-                  console.log(d); 
+              .on("click", function(d) {
+                  console.log(d);
                   console.log('fiber number is ' + ((126-(1+parseInt(d/8)))*8+d%8));
                   console.log('x is ' + d%8);
                   console.log('y is ' + (126-(1+parseInt(d/8))));
@@ -181,10 +198,10 @@
           svg.append("text")
               .attr("transform", "translate(" + cellSize * (4 + 16) + ",0)")
               .style("text-anchor", "middle")
-	      .text("rear(in)");
+        .text("rear(in)");
 
           var rear_rect = svg.selectAll(".rear_port")
-	      .data(d3.range(0, 126 * 8))
+        .data(d3.range(0, 126 * 8))
               .enter().append("rect")
               .attr("class", "port rear_port")
               .attr("width", cellSize)
@@ -192,7 +209,7 @@
               .attr("x", function(d) { return (d % 8 + 16) * cellSize; })
               .attr("y", function(d) { return (1 +  parseInt(d / 8)) * cellSize; })
               .on("click", function(d) {
-                  console.log(d); 
+                  console.log(d);
                   console.log('x is ' + d%8);
                   console.log('y is ' + (126-(1+parseInt(d/8))));
               })
@@ -242,7 +259,7 @@
               .attr("y", function(d) { return (1 + parseInt(d / 8)) * cellSize; });
 
             svg.selectAll(".rear_port")
-	      .data(d3.range(0, 126 * 8))
+        .data(d3.range(0, 126 * 8))
               .transition().duration(1000)
               .attr("x", function(d) { return (d % 8 + 16) * cellSize; })
               .attr("y", function(d) { return (1 + parseInt(d / 8)) * cellSize; });

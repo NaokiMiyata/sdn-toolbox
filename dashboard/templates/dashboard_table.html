@@ -16,8 +16,8 @@
     <div
       paging
       class="small"
-      page="currentPage" 
-      page-size="pageSize" 
+      page="currentPage"
+      page-size="pageSize"
       total="(items | filter:query).length"
       pg-href="#GotoPage-{page}"
       show-prev-next="{{showPrevNext}}"
@@ -41,7 +41,7 @@
     </thead>
     <tbody>
       <tr
-         ng-repeat="item in items | filter:query | limitTo:pageSize:(currentPage-1)*pageSize"
+         ng-repeat="item in items | regex:query | limitTo:pageSize:(currentPage-1)*pageSize"
          ng-class="{active:$parent.isSelectedItem(item)}"
          ng-click="$parent.setItem(item)">
         <td>{{ item.number | number}}</td>
