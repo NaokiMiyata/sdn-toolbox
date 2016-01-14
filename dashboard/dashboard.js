@@ -7,7 +7,7 @@
         var patt = new RegExp(regex);
         var out = [];
         for (var i = 0; i < input.length; i++){
-          for ( p in input[i]) {
+          for ( var p in input[i]) {
             if(patt.test(input[i][p])){
                 out.push(input[i]);
                 break;
