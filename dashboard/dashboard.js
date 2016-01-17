@@ -31,7 +31,7 @@
       restrict: 'E',
       templateUrl: 'templates/dashboard_table',
       scope: {
-          selectedItem: '='
+          selectedItems: '='
       },
       controller: ['$scope', '$http', function($scope, $http) {
         $scope.currentPage = 1;
@@ -44,14 +44,26 @@
           $scope.items = data;
         });
 
-        $scope.isSelectedItem = function(item) {
-            return $scope.selectedItem === item;
+        $scope.inArray = function(item) {
+            for (var i = 0; i < $scope.selectedItems.length; i++){
+                if ($scope.selectedItems[i].number === item.number) {
+                    return i;
+                }
+            }
+            return -1;
         };
+                   
+
+        $scope.isSelectedItem = function(item) {
+            return $scope.inArray(item) >= 0;
+        };
+
         $scope.setItem = function(item) {
-            if ($scope.selectedItem === item) {
-                $scope.selectedItem = null;
+            var index = $scope.inArray(item);
+            if (index >= 0) {
+                $scope.selectedItems.splice(index, 1);
             } else {
-                $scope.selectedItem = item;
+                $scope.selectedItems.push(item);
             }
         };
       }],
@@ -70,6 +82,17 @@
       controller: ['$http', function($http) {
       }],
       controllerAs: 'detailsCtrl'
+    };
+  });
+
+  myApp.directive('dashboardList', function() {
+    return {
+      restrict: 'A',
+      templateUrl: 'templates/dashboard_list.html',
+      scope: {
+        items: '=',
+        orderConfirmed: '='
+      }
     };
   });
 

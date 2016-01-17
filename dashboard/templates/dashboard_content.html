@@ -1,12 +1,19 @@
 <h1 class="page-header">Dashboard</h1>
 
-<div ng-init="item = null; orderConfirmed = false">
-  <dashboard-table selected-item="item"></dashboard-table>
+<div ng-init="items = []; orderConfirmed = false">
+  <dashboard-table selected-items="items"></dashboard-table>
 
   <div dashboard-details
     class="dashboard-panel"
-    ng-show="item"
-    item="item"
+    ng-show="items && items.length === 1"
+    item="items[0]"
+    order-confirmed="orderConfirmed">
+  </div>
+
+  <div dashboard-list
+    class="dashboard-panel"
+    ng-show="items && items.length > 1"
+    items="items"
     order-confirmed="orderConfirmed">
   </div>
 

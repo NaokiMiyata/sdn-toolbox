@@ -1,0 +1,29 @@
+<div class="panel panel-primary">
+  <div class="panel-heading">Step 2. Order list</div>
+  <div class="panel-body">
+    Please see the order details.
+  </div>  
+  <table class="table table-hover">
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>Header</th>
+        <th>Header</th>
+        <th>Header</th>
+        <th>Header</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr
+         ng-repeat="item in items | filter:query | limitTo:pageSize:(currentPage-1)*pageSize"
+         ng-class="{active:$parent.isSelectedItem(item)}"
+         ng-click="$parent.setItem(item)">
+        <td>{{ item.number | number}}</td>
+        <td>{{ item.first }}</td>
+        <td>{{ item.second }}</td>
+        <td>{{ item.third }}</td>
+        <td>{{ item.fourth }}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
