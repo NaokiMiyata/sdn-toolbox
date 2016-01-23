@@ -4,7 +4,7 @@ install
 ```bash
 $ virtualenv env/gapi
 $ source env/gapi/bin/activate
-$ pip install --upgrade google-api-python-client requests
+$ pip install --upgrade google-api-python-client requests pymongo
 ```
 
 
