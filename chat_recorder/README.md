@@ -1,0 +1,42 @@
+install
+========
+
+```bash
+$ virtualenv env/gapi
+$ source env/gapi/bin/activate --python=/usr/bin/python3
+$ pip install --upgrade google-api-python-client requests pymongo
+```
+
+
+configuration
+=============
+
+for hipchat api
+---------------
+
+hipchat.jsonに下記の内容を記載する
+
+```json
+{
+    "user": "<id or email>",
+    "token": "<api token>"
+}
+```
+
+for google drive api
+--------------------
+
+client_secret.jsonを置く
+
+run
+========
+
+hipchat -> mongodb
+```bash
+$ python hipchat.py
+```
+
+mongodb -> google drive
+```bash
+$ python gdrive.py  --noauth_local_webserver
+```
