@@ -3,7 +3,7 @@ install
 
 ```bash
 $ virtualenv env/gapi
-$ source env/gapi/bin/activate
+$ source env/gapi/bin/activate --python=/usr/bin/python3
 $ pip install --upgrade google-api-python-client requests pymongo
 ```
 
