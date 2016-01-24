@@ -5,7 +5,7 @@ from pymongo import MongoClient
 
 import pprint
 
-filename = 'hipchat.json'
+CONFFILE = 'hipchat.json'
 
 
 def read_config(filename):
@@ -69,7 +69,7 @@ def save_messages(messages):
 
 
 def main():
-    config = read_config(filename)
+    config = read_config(CONFFILE)
 
     messages = get_day_messages(config['user'], config['token'], yesterday())
 

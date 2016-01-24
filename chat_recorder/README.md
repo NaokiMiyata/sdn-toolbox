@@ -31,7 +31,12 @@ client_secret.jsonを置く
 run
 ========
 
+hipchat -> mongodb
 ```bash
 $ python hipchat.py
-$ python sample.py  --noauth_local_webserver
+```
+
+mongodb -> google drive
+```bash
+$ python gdrive.py  --noauth_local_webserver
 ```
