@@ -1,12 +1,10 @@
 import json
 import requests
 from datetime import timedelta,datetime,tzinfo,timezone
-from pymongo import MongoClient
 
-import pprint
+from mongodb import save_messages
 
 CONFFILE = 'hipchat.json'
-
 
 def read_config(filename):
     with open(filename) as f:
@@ -55,17 +53,6 @@ def get_day_messages(user, token, day):
     history = response.json()
 
     return history['items']
-
-
-def save_messages(messages):
-    client = MongoClient()
-
-    db = client.hipchat_database
-
-    collection = db.hipchat_collection
-
-    for item in messages:
-        collection.update({'id': item['id']}, item, upsert=True)
 
 
 def main():

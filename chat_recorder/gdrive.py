@@ -10,16 +10,20 @@ from apiclient import discovery
 import oauth2client
 from oauth2client import client
 from oauth2client import tools
+from apiclient.http import MediaFileUpload,MediaIoBaseUpload
 
 from pymongo import MongoClient
 
-from apiclient.http import MediaFileUpload,MediaIoBaseUpload
+from mongodb import list_messages
+from formatter import JsonFormatter, TextFormatter
+
 
 try:
     import argparse
     flags = argparse.ArgumentParser(parents=[tools.argparser]).parse_args()
 except ImportError:
     flags = None
+
 
 SCOPES = [
     'https://www.googleapis.com/auth/drive',
@@ -57,7 +61,7 @@ def get_credentials():
             credentials = tools.run_flow(flow, store, flags)
         else: # Needed only for compatibility with Python 2.6
             credentials = tools.run(flow, store)
-        print('Storing credentials to ' + credential_path)
+
     return credentials
 
 def get_service():
@@ -67,59 +71,60 @@ def get_service():
     return discovery.build('drive', 'v2', http=http)
 
 
-def list():
+def list_files():
     """Shows basic usage of the Google Drive API.
 
     Creates a Google Drive API service object and outputs the names and IDs
     for up to 10 files.
     """
+    service = get_service()
+
     results = service.files().list(
         fields="items(id, title)").execute()
-    items = results.get('items', [])
-    if not items:
-        print('No files found.')
-    else:
-        print('Files:')
-        for item in items:
-            print('{0} ({1})'.format(item['title'].encode('utf-8'), item['id']))
+    return results.get('items', [])
 
 
-def upload(filename, content):
+def get(filename):
+    service = get_service()
+
+    items = list_files()
+
+    for item in items:
+        if item['title'] == filename:
+            return item
+
+    return None
+
+
+def upload(filename, content, formatter):
     service = get_service()
 
     media_body = MediaIoBaseUpload(
-        io.BytesIO(content.encode()),
-        mimetype='text/plain',
+        io.BytesIO(formatter.format(content).encode()),
+        mimetype=formatter.mimetype,
         resumable=True)
 
     body = {
         'title': filename,
         'description': 'desc',
-        'mimeType': 'application/json',
+        'mimeType': formatter.mimetype,
         'parents': [{'id': '0Bz1eru8bNBfGd2d5UWlXMzFNTGM'}], # tsdn
     }
 
-    result = service.files().insert(
+    file = get(filename)
+
+    result = service.files().update(
+        fileId=file['id'],
         body=body,
         media_body=media_body
         ).execute()
 
-    print(result)
 
 def main():
-    client = MongoClient()
-    db = client.hipchat_database
-    collection = db.hipchat_collection
+    items = list_messages()
 
-    items = []
-    for doc in collection.find({}).sort('date', 1):
-        items.append(doc)
-
-    from bson.json_util import dumps
-
-    dumps(items)
-
-    upload('test.txt', dumps(items))
+    upload('hipchat.json', items, JsonFormatter())
+    upload('hipchat.txt', items, TextFormatter())
 
 
 if __name__ == '__main__':
