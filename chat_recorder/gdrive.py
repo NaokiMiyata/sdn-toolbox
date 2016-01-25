@@ -6,6 +6,8 @@ import os
 import io
 import json
 
+import logging
+
 from apiclient import discovery
 import oauth2client
 from oauth2client import client
@@ -17,6 +19,7 @@ from pymongo import MongoClient
 from mongodb import list_messages
 from formatter import JsonFormatter, TextFormatter
 
+logger = logging.getLogger(__name__)
 
 try:
     import argparse
@@ -85,6 +88,7 @@ def list_files():
 
 
 def get(filename):
+    logger.debug('filename: %s', filename)
     service = get_service()
 
     items = list_files()
@@ -97,6 +101,8 @@ def get(filename):
 
 
 def upload(filename, content, formatter):
+    logger.debug('%s, %s', filename, formatter)
+
     service = get_service()
 
     media_body = MediaIoBaseUpload(
