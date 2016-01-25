@@ -2,11 +2,11 @@ install
 ========
 
 ```bash
-$ virtualenv env/gapi
-$ source env/gapi/bin/activate --python=/usr/bin/python3
+$ virtualenv env/gapi --python=/usr/bin/python3
+$ source env/gapi/bin/activate
 $ pip install --upgrade google-api-python-client requests pymongo
+$ sudo apt-get install mongodb
 ```
-
 
 configuration
 =============
@@ -31,12 +31,7 @@ client_secret.jsonを置く
 run
 ========
 
-hipchat -> mongodb
+hipchat -> mongodb -> google drive
 ```bash
-$ python hipchat.py
-```
-
-mongodb -> google drive
-```bash
-$ python gdrive.py  --noauth_local_webserver
+$ python dailiy.py
 ```
